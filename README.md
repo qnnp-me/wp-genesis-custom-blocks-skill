@@ -12,7 +12,7 @@
 ## 前置
 
 - 已安装 **wpops**(`npm i -g wpops`,或用 `npx wpops`),并已 `wpops setup` 配好站点。
-- 站点安装了 **Genesis Custom Blocks** 插件。
+- 站点已安装并启用 **Genesis Custom Blocks** 插件:<https://cn.wordpress.org/plugins/genesis-custom-blocks/>(检测:`wpops plugins list | grep -i genesis`)。
 
 ## 安装
 

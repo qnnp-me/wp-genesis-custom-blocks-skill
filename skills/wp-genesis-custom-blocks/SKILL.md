@@ -6,19 +6,27 @@ description: Use when creating, editing, or managing Genesis Custom Blocks (the 
 # Genesis Custom Blocks(GCB)管理
 
 > **⚠️ 注意事项(先读)**
-> 1. **依赖 wpops**:所有操作都通过 `wpops` 完成。没有就先 `npm i -g wpops` 并 `wpops setup`(或 `npx wpops`);不要手搓 curl。
-> 2. **端点可能打不通**:GCB 的 CPT 以 `'show_in_rest' => current_user_can('edit_posts')` 注册,应用密码请求常常返回 `rest_no_route`(404)。此时需在**站点侧**加一段 PHP 强制开放(见 §0),换用户/换命令都没用。
+> 1. **站点需已装并启用插件**:[**Genesis Custom Blocks**](https://cn.wordpress.org/plugins/genesis-custom-blocks/)。没装就没有 `genesis_custom_block` 这个 CPT,本 skill 无从下手。
+> 2. **依赖 wpops**:所有操作都通过 `wpops` 完成。没有就先 `npm i -g wpops` 并 `wpops setup`(或 `npx wpops`);不要手搓 curl。
+> 3. **端点可能打不通**:插件已装也可能因 `'show_in_rest' => current_user_can('edit_posts')` 的时序问题,让应用密码请求返回 `rest_no_route`(404)。此时需在**站点侧**加一段 PHP 强制开放(见 §0),换用户/换命令都没用。
 
 通过 `wpops` 管理 Genesis Custom Blocks(插件 `genesis-custom-blocks`)。**所有操作都走 `wpops`,不要手搓 curl**。
 
 ## 前置
 
+- **站点已安装并启用 `genesis-custom-blocks` 插件**:<https://cn.wordpress.org/plugins/genesis-custom-blocks/>(后台「插件 → 安装插件」搜 Genesis Custom Blocks)。检测:`wpops plugins list | grep -i genesis`。
 - 需要 `wpops` 与一个已配置站点(`wpops doctor` 通过)。没有就先装 `wpops`。
 - GCB 的区块就是 CPT `genesis_custom_block`,所以核心 CRUD 用的是通用的 `wpops content <rest_base>`。
 
 ## 0. 先判断「能不能用」(必做第一步)
 
-GCB 注册 CPT 时写死了:
+先确认**插件在不在**(不在就先装,别往下查):
+
+```bash
+wpops plugins list | grep -i genesis     # 应看到 genesis-custom-blocks [active]
+```
+
+插件已启用后,再判断**路由是否可用**。GCB 注册 CPT 时写死了:
 
 ```php
 'show_in_rest' => current_user_can( 'edit_posts' ),

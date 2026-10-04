@@ -1,5 +1,22 @@
 # 可用性:为什么 GCB 的端点常常打不通
 
+## 第 0 步:插件装了没
+
+```bash
+wpops plugins list | grep -i genesis
+```
+
+- 列表里**没有** `genesis-custom-blocks` → 插件未装/未启用。先安装并启用:
+  <https://cn.wordpress.org/plugins/genesis-custom-blocks/>(后台「插件 → 安装插件」搜 Genesis Custom Blocks)。没插件时 `genesis_custom_block` 根本不存在。
+- 有且 `[active]` → 进入下面的「路由打不通」排查。
+
+## 两种「不可用」要分清
+
+| 现象 | 原因 | 处理 |
+|---|---|---|
+| 插件列表里没有 / 未启用 | 插件未装或未启用 | 安装并启用插件 |
+| 插件已启用,但 `wpops content list genesis_custom_block` → `404 rest_no_route` | `init` 时序导致 `show_in_rest` 为 false(见下「根因」) | 加 PHP 强制开放(见「兜底:强制开放 REST」) |
+
 ## 根因
 
 插件 `genesis-custom-blocks`,文件 `php/PostTypes/BlockPost.php`:
