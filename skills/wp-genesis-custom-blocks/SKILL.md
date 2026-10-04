@@ -5,6 +5,10 @@ description: Use when creating, editing, or managing Genesis Custom Blocks (the 
 
 # Genesis Custom Blocks(GCB)管理
 
+> **⚠️ 注意事项(先读)**
+> 1. **依赖 wpops**:所有操作都通过 `wpops` 完成。没有就先 `npm i -g wpops` 并 `wpops setup`(或 `npx wpops`);不要手搓 curl。
+> 2. **端点可能打不通**:GCB 的 CPT 以 `'show_in_rest' => current_user_can('edit_posts')` 注册,应用密码请求常常返回 `rest_no_route`(404)。此时需在**站点侧**加一段 PHP 强制开放(见 §0),换用户/换命令都没用。
+
 通过 `wpops` 管理 Genesis Custom Blocks(插件 `genesis-custom-blocks`)。**所有操作都走 `wpops`,不要手搓 curl**。
 
 ## 前置
