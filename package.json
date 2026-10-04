@@ -1,0 +1,27 @@
+{
+  "name": "wp-genesis-custom-blocks-skill",
+  "version": "0.1.0",
+  "description": "Agent skill: manage Genesis Custom Blocks on WordPress through wpops (availability probe, block JSON, templates).",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qnnp-me/wp-genesis-custom-blocks-skill.git"
+  },
+  "bin": {
+    "wp-gcb-skill": "scripts/cli.mjs"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.mjs"
+  },
+  "files": [
+    "lib",
+    "scripts",
+    "skills",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}
