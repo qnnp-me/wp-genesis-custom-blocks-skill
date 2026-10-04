@@ -16,18 +16,27 @@
 
 ## 安装
 
-任选一种:
+**方式 A(推荐,gh 原生):**
 
 ```bash
-# A. 从 GitHub 直接装(会跑 postinstall,自动把 skill 铺到 ~/.agents/skills/)
+# 装到本机(OpenCode,用户级)。不给 skill 名会先列出仓库里的 skill。
+gh skill install qnnp-me/wp-genesis-custom-blocks-skill wp-genesis-custom-blocks --agent opencode --scope user
+
+# 装到当前项目(项目级 .agents/skills)
+gh skill install qnnp-me/wp-genesis-custom-blocks-skill --all --agent opencode --scope project
+```
+
+> `gh skill` 是 GitHub CLI 的原生 skill 分发(preview),支持 `list / search / update`,并会记录来源以便 `gh skill update`。
+
+**方式 B(npm / git,机器上没有 gh 时):**
+
+```bash
+# 从 GitHub 直接装(会跑 postinstall,自动把 skill 铺到 ~/.agents/skills/)
 npm i -g github:qnnp-me/wp-genesis-custom-blocks-skill
 
-# B. clone 后手动装
+# 或 clone 后手动装
 git clone https://github.com/qnnp-me/wp-genesis-custom-blocks-skill
 node wp-genesis-custom-blocks-skill/scripts/cli.mjs install
-
-# C. 如果它已发布到 npm(可选)
-npm i -g wp-genesis-custom-blocks-skill
 ```
 
 安装后 skill 位于:`~/.agents/skills/wp-genesis-custom-blocks/`(含 `SKILL.md` 与 `reference/`)。
@@ -35,7 +44,9 @@ npm i -g wp-genesis-custom-blocks-skill
 ## 更新
 
 ```bash
-npm i -g github:qnnp-me/wp-genesis-custom-blocks-skill   # 重新拉取
+gh skill update wp-genesis-custom-blocks                          # gh 原生(推荐)
+# 或
+npm i -g github:qnnp-me/wp-genesis-custom-blocks-skill
 # 或本地改动后:
 node scripts/cli.mjs install
 ```
