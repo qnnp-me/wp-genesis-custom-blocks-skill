@@ -1,6 +1,7 @@
 ---
 name: wp-genesis-custom-blocks
 description: Use when creating, editing, or managing Genesis Custom Blocks (the genesis_custom_block post type) on a WordPress site through wpops — defining block fields and templates as JSON, checking whether the genesis_custom_block REST endpoint is actually reachable with application passwords, the show_in_rest timing gotcha and its PHP fallback, and injecting the blocks into pages. Requires wpops.
+license: MIT
 ---
 
 # Genesis Custom Blocks(GCB)管理
