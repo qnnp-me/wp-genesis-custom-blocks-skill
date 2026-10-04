@@ -41,6 +41,17 @@ node wp-genesis-custom-blocks-skill/scripts/cli.mjs install
 
 安装后 skill 位于:`~/.agents/skills/wp-genesis-custom-blocks/`(含 `SKILL.md` 与 `reference/`)。
 
+## 开发机 vs 部署机
+
+- **开发机(changing the skill)**:让安装目录**直接指向源码**(junction),改完即时生效,不用反复安装;`gh skill update` 不会拿发布版覆盖你正在改的内容。
+  ```powershell
+  # 若已是普通目录先删掉
+  Remove-Item -Recurse -Force "$HOME\.agents\skills\wp-genesis-custom-blocks"
+  cmd /c mklink /J "$HOME\.agents\skills\wp-genesis-custom-blocks" "$HOME\Projects\wp-genesis-custom-blocks-skill\skills\wp-genesis-custom-blocks"
+  ```
+  > 安装器检测到目标是指向源码的符号链接/junction 会**自动跳过**(不会把源码覆盖自己)。
+- **部署机 / 别人的机器(只消费)**:用 `gh skill install`,可 `gh skill update`、可 `--pin` 锁版本(见上)。
+
 ## 更新
 
 ```bash

@@ -5,8 +5,8 @@ import { installSkill, skillTargetDirs, skillSourceDir } from '../lib/install.mj
 const cmd = process.argv[2] || 'install';
 
 if (cmd === 'install') {
-  const dirs = installSkill();
-  if (!dirs.length) {
+  const { installed, skipped } = installSkill();
+  if (!installed.length && !skipped.length) {
     console.error(
       `未安装任何目录。检查源目录是否存在:${skillSourceDir()}\n` +
         `目标:${skillTargetDirs().join('\n       ')}`

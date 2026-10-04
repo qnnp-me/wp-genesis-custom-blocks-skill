@@ -3,8 +3,8 @@
 import { installSkill } from '../lib/install.mjs';
 
 try {
-  const installed = installSkill();
-  if (!installed.length) {
+  const { installed, skipped } = installSkill();
+  if (!installed.length && !skipped.length) {
     console.log('wp-genesis-custom-blocks-skill: 未自动安装 skill(可运行 `wp-gcb-skill install`)');
   }
 } catch {
