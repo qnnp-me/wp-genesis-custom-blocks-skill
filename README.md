@@ -19,27 +19,36 @@
 **方式 A(推荐,gh 原生):**
 
 ```bash
-# 装到本机(OpenCode,用户级)。不给 skill 名会先列出仓库里的 skill。
-gh skill install qnnp-me/wp-genesis-custom-blocks-skill wp-genesis-custom-blocks --agent opencode --scope user
+# 不给 skill 名会先列出仓库里的 skill
+gh skill install qnnp-me/wp-genesis-custom-blocks-skill
 
-# 装到当前项目(项目级 .agents/skills)
-gh skill install qnnp-me/wp-genesis-custom-blocks-skill --all --agent opencode --scope project
+# 安装;--agent 决定落点,--scope 取 user|project
+gh skill install qnnp-me/wp-genesis-custom-blocks-skill wp-genesis-custom-blocks --agent universal --scope user
 ```
 
-> `gh skill` 是 GitHub CLI 的原生 skill 分发(preview),支持 `list / search / update`,并会记录来源以便 `gh skill update`。
+`--agent` 与落点(实测 gh 2.x):
+
+| 命令 | 落点 |
+|---|---|
+| `--agent universal --scope user` | `~/.agents/skills/`(多 agent 共享目录) |
+| `--agent opencode --scope user` | `~/.config/opencode/skills/` |
+| `--scope project`(在项目目录内执行) | `<项目>/.agents/skills/` |
+| `--dir <目录>` | `<目录>/wp-genesis-custom-blocks/`(自己指定 skills 根) |
+
+> 想装到 `~/.agents/skills/`,用 `--agent universal`(或 `--dir "$HOME/.agents/skills"`),**不要**用 `--agent opencode`——那是 OpenCode 自己的目录。
 
 **方式 B(npm / git,机器上没有 gh 时):**
 
 ```bash
-# 从 GitHub 直接装(会跑 postinstall,自动把 skill 铺到 ~/.agents/skills/)
-npm i -g github:qnnp-me/wp-genesis-custom-blocks-skill
+npm i -g wp-genesis-custom-blocks-skill                    # 从 npm 注册表
+npm i -g github:qnnp-me/wp-genesis-custom-blocks-skill     # 从 GitHub 源(会跑 postinstall)
 
 # 或 clone 后手动装
 git clone https://github.com/qnnp-me/wp-genesis-custom-blocks-skill
 node wp-genesis-custom-blocks-skill/scripts/cli.mjs install
 ```
 
-安装后 skill 位于:`~/.agents/skills/wp-genesis-custom-blocks/`(含 `SKILL.md` 与 `reference/`)。
+> 方式 B 与本仓库的安装器固定装到 **`~/.agents/skills/wp-genesis-custom-blocks/`**(供读该目录的 agent 使用)。
 
 ## 开发机 vs 部署机
 
@@ -86,7 +95,10 @@ skills/wp-genesis-custom-blocks/
 
 ## 卸载
 
-删除 `~/.agents/skills/wp-genesis-custom-blocks/` 即可。
+删除对应安装目录即可:
+
+- gh 装的:看 `gh skill list` 里它的路径 —— `~/.agents/skills/wp-genesis-custom-blocks/`(universal)或 `~/.config/opencode/skills/wp-genesis-custom-blocks/`(opencode),删掉该目录;
+- 本仓库安装器/npm 装的:删除 `~/.agents/skills/wp-genesis-custom-blocks/`。
 
 ## License
 
